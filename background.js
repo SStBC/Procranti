@@ -1,4 +1,4 @@
-var REPLACETHISWITHAUSERNAME = 'rppr'; // get from setting on options page
+var REPLACETHISWITHAUSERNAME = ''; // get from setting on options page
 var uniqueAppId = '3a51d153-ad33-45db-bc2d-31844bdfa262';
 var key = uniqueAppId + REPLACETHISWITHAUSERNAME;
 
@@ -52,7 +52,7 @@ function isVisitAllowed(location, sendResponse) {
   var shouldBlock = false;
   for (var i = 0; i < obj.entries.length; i++) {
     var entry = obj.entries[i];
-    if (entry.host == location.host) {
+    if (entry.host == location.href) {
       if (entry.lastVisit == null) {
         entry.lastVisit = new Date().getTime();
       } else {
