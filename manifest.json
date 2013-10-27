@@ -1,0 +1,21 @@
+{
+  "name": "Procranti",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "scripts": ["jquery.min.js", "background.js"]
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["procranti.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://secure.openkeyval.org; object-src 'self'"
+}

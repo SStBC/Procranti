@@ -1,0 +1,26 @@
+<html ng-app ng-csp>
+  <head><title>Options</title></head>
+
+  <body ng-controller="optionsController">
+    <input type="text" placeholder="Site URL" ng-model="host" />
+    <input type="text" placeholder="Curfew" ng-model="curfew" />
+    <input type="submit" ng-click="add()" value="Add" />
+
+    <hr />
+
+    <div ng-repeat="item in obj.entries">
+      {{item.host}} ({{item.curfew}}) <input type="submit" ng-click="remove($index)" value="Delete" />
+    </div>
+
+    <hr />
+
+    <input type="submit" id="btnSave" ng-click="save()" value="Save to cloud" />
+
+    <hr />
+    Icon by <a href="https://www.iconfinder.com/icons/83755/geek_icon#size=32">Momentum Design Lab</a>
+
+    <script src="jquery.min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
