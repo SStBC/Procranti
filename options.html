@@ -2,6 +2,10 @@
   <head><title>Options</title></head>
 
   <body ng-controller="optionsController">
+    <input type="text" placeholder="User name" ng-model="userName" />
+    <input type="submit" ng-click="setUserName()" value="Set" />
+    <hr />
+
     <input type="text" placeholder="Site URL" ng-model="host" />
     <input type="text" placeholder="Curfew" ng-model="curfew" />
     <input type="submit" ng-click="add()" value="Add" />

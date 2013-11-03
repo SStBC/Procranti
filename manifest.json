@@ -17,5 +17,8 @@
       "run_at": "document_start"
     }
   ],
+  "permissions": [
+    "storage"
+  ],
   "content_security_policy": "script-src 'self' https://secure.openkeyval.org; object-src 'self'"
 }

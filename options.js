@@ -10,6 +10,12 @@ function optionsController($scope) {
     }
   };
 
+  $scope.setUserName = function() {
+    chrome.storage.sync.set({'userName': $scope.userName}, function() {
+      chrome.extension.sendMessage({do: 'reload'});
+    });
+  };
+
   $scope.save = function() {
     $('#btnSave').hide(); // TODO: Disable instead
     chrome.extension.sendMessage({do: 'save'});
@@ -22,6 +28,9 @@ function optionsController($scope) {
   $scope.respond = function(request, sender, sendReponse) {
     if (request.do === 'saveCompleted') {
       $('#btnSave').show();
+    } else if (request.do === 'reloadOptions') {
+      $scope.obj = bg.obj;
+      $scope.$apply();
     }
   };
 

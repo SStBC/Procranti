@@ -1,11 +1,22 @@
-var REPLACETHISWITHAUSERNAME = ''; // get from setting on options page
+var userName = ''; 
 var uniqueAppId = '3a51d153-ad33-45db-bc2d-31844bdfa262';
-var key = uniqueAppId + REPLACETHISWITHAUSERNAME;
+var key = function() { return uniqueAppId + userName; };
+var obj = {};
 
-function saveSettings() {
+function initialize() {
+  chrome.storage.sync.get('userName', function(data) {
+    obj = {};
+    obj.entries = [];
+    console.log('Got user name', data);
+    userName = data.userName;
+    loadSettings();
+  });
+}
+
+function saveSettings() { // TODO: Openkeyval isn't necesary, use chrome.storage
   $.ajax({
     url: "https://secure.openkeyval.org/store/",
-    data: key + '=' + JSON.stringify(obj),
+    data: key() + '=' + JSON.stringify(obj),
     dataType: "jsonp",
     success: function(data){
       console.log("Saved ", data);
@@ -16,19 +27,19 @@ function saveSettings() {
 
 function loadSettings() {
   $.ajax({
-    url: 'https://secure.openkeyval.org/' + key,
+    url: 'https://secure.openkeyval.org/' + key(),
     dataType: "jsonp",
     success: function(data){
       var parsed = JSON.parse(data);
-      console.log('got', parsed);
+      console.log('Got settings', parsed);
       if (parsed !== null) {
         obj = parsed;
       }
+      chrome.extension.sendMessage({do: 'reloadOptions'});
     }
   });
 };
 
-var obj = {};
 // TODO: Change curfew unit to minutes
 //var obj = { // Initializer values
 //  entries: [
@@ -44,6 +55,10 @@ function respond(request, sender, sendResponse) {
   }
   else if (request.do === 'check') {
     sendResponse(isVisitAllowed(request.data.location, sendResponse));
+  }
+  else if (request.do === 'reload') {
+    initialize();
+    sendResponse(true); // TODO
   }
 };
 
@@ -70,4 +85,4 @@ function isVisitAllowed(location, sendResponse) {
 
 chrome.extension.onMessage.addListener(respond);
 
-loadSettings();
+initialize();
