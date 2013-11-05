@@ -1,6 +1,7 @@
 function optionsController($scope) {
   var bg = chrome.extension.getBackgroundPage();
-  $scope.obj = bg.obj;
+  $scope.obj = bg.obj; // TODO: Extract these lines into init function
+  $scope.userName = bg.userName; // TODO: Extract these lines into init function
 
   $scope.add = function() {
     if ($scope.host && $scope.curfew) {
@@ -30,6 +31,7 @@ function optionsController($scope) {
       $('#btnSave').show();
     } else if (request.do === 'reloadOptions') {
       $scope.obj = bg.obj;
+      $scope.userName = bg.userName;
       $scope.$apply();
     }
   };
