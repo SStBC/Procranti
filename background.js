@@ -84,5 +84,6 @@ function isVisitAllowed(location, sendResponse) {
 };
 
 chrome.extension.onMessage.addListener(respond);
+chrome.browserAction.onClicked.addListener(function(tab) {chrome.tabs.create({url: "options.html"});});
 
 initialize();
